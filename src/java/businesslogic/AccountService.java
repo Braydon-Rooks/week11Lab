@@ -8,11 +8,13 @@ package businesslogic;
 import dataaccess.NotesDBException;
 import dataaccess.UserDB;
 import domainmodel.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -54,5 +56,35 @@ public class AccountService {
         
         return null;
     }
-    
+    public boolean forgotPassword(HttpServletRequest request, String email,String path)
+    {
+        try {
+            User user;
+            
+            UserDB userDB = new UserDB();
+            
+            user = userDB.getUserByEmail(email);
+            
+            
+            HashMap<String, String> contents = new HashMap<>();
+            
+            contents.put("firstname", user.getFirstname());
+            contents.put("lastname", user.getLastname());
+            contents.put("username", user.getUsername());
+            contents.put("password", user.getPassword());
+            
+            
+            String template = path + "/emailtemplates/password.html";
+            WebMailService.sendMail(user.getEmail(), "NotesKeepr Password", template, contents);
+            
+           
+        } catch (MessagingException ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return true;
+    }
 }
