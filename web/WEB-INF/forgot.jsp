@@ -17,5 +17,6 @@
             Email Address:<input type ="test" name="email"><br/>
             <input type ="submit" value="Submit"><br/>
         </form> 
+        ${Sent}
     </body>
 </html>

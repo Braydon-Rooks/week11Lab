@@ -36,6 +36,12 @@ public class ForgotPasswordServlet extends HttpServlet {
         if(as.forgotPassword(request,email, path))
         {
             request.setAttribute("Sent", "Email Sent");
+            getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp").forward(request, response);
+        }
+        else
+        {
+            request.setAttribute("Sent", "Email Not Sent");
+        getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp").forward(request, response);
         }
     }
 

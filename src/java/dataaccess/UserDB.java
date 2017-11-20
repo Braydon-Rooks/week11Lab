@@ -105,8 +105,7 @@ public class UserDB {
     public User getUserByEmail(String email) {
          EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
-      User user = em.createNamedQuery("User.findByEmail", 
-        User.class).setParameter("email", email).getSingleResult();
+      User user = em.createNamedQuery("User.findByEmail",User.class).setParameter("email", email).getSingleResult();
       
       
       em.close();
